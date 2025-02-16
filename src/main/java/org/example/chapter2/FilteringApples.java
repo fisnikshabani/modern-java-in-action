@@ -1,10 +1,10 @@
-package org.example.chapter1;
+package org.example.chapter2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.example.chapter1.FilteringApples.Color.GREEN;
+import static org.example.chapter2.FilteringApples.Color.GREEN;
 
 public class FilteringApples {
 
@@ -18,7 +18,7 @@ public class FilteringApples {
         List<Apple> greenApples = filterGreenApples(inventory);
         System.out.println(greenApples);
 
-        List<Apple> applesByColor = filterApplesByColor(inventory, Color.GREEN);
+        List<Apple> applesByColor = filterApplesByColor(inventory, GREEN);
         System.out.println(applesByColor);
 
         List<Apple> applesByWeight = filterApplesByWeight(inventory, 150);
@@ -38,6 +38,13 @@ public class FilteringApples {
 
         List<Apple> greenApplesWithPredicate = filterAppleswithPredicate(inventory, new AppleGreenColorPredicate());
         System.out.println("Green apples with predicate: " + greenApplesWithPredicate.size());
+
+        AppleFormatter simpleFormatter = new AppleSimpleFormatter();
+        prettyPrintApple(inventory, simpleFormatter);
+
+        AppleFormatter fancyFormatter = new AppleFancyFormatter();
+        prettyPrintApple(inventory, fancyFormatter);
+
     }
 
     enum Color {
@@ -132,6 +139,10 @@ public class FilteringApples {
         boolean test (Apple apple);
     }
 
+    public interface AppleFormatter {
+        String accept(Apple apple);
+    }
+
     public static class AppleHeavyWeightPredicate implements ApplePredicate {
 
         @Override
@@ -147,4 +158,29 @@ public class FilteringApples {
             return GREEN.equals(apple.getColor());
         }
     }
+
+    public static class AppleFancyFormatter implements AppleFormatter {
+
+        @Override
+        public String accept(Apple apple) {
+            String characteristic = apple.getWeight() > 150 ? "heavy" : "light";
+            return "A " + characteristic + " " + apple.getColor() + " apple";
+        }
+    }
+
+    public static class AppleSimpleFormatter implements AppleFormatter {
+        @Override
+        public String accept(Apple apple) {
+            return "An apple of " + apple.getWeight() + "g";
+        }
+    }
+
+    public static void prettyPrintApple (List<Apple> inventory, AppleFormatter appleFormatter) {
+        for (Apple apple: inventory) {
+            String output = appleFormatter.accept(apple);
+            System.out.println(output);
+        }
+    }
+
+
 }
