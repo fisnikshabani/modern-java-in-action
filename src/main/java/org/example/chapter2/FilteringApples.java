@@ -45,6 +45,14 @@ public class FilteringApples {
         AppleFormatter fancyFormatter = new AppleFancyFormatter();
         prettyPrintApple(inventory, fancyFormatter);
 
+        List<Apple> redApplesWithAnonymousClass = filterAppleswithPredicate(inventory, new ApplePredicate() {
+            @Override
+            public boolean test(Apple apple) {
+                return Color.RED.equals(apple.getColor());
+            }
+        });
+        System.out.println("Red apples with anonymous class: " + redApplesWithAnonymousClass);
+
     }
 
     enum Color {
