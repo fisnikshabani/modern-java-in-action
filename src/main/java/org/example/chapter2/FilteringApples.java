@@ -56,6 +56,10 @@ public class FilteringApples {
         List<Apple> redApplesWithLambda = filterAppleswithPredicate(inventory, (Apple apple) -> Color.RED.equals(apple.getColor()));
         System.out.println("Red apples with lambda: " + redApplesWithLambda);
 
+        List<Apple> filterAppleThatWeightMoreThan100 = filter(inventory, (Apple apple) -> apple.getWeight() > 100);
+        System.out.println("filterApplesThatWeightMoreThan100: " + filterAppleThatWeightMoreThan100);
+
+
     }
 
     enum Color {
@@ -192,6 +196,18 @@ public class FilteringApples {
             System.out.println(output);
         }
     }
-
-
+    
+    public interface Predicate<T> {
+        boolean test(T t);
+    }
+    
+    public static <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+        List<T> result = new ArrayList<>();
+        for (T t: list) {
+            if(predicate.test(t)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
 }
