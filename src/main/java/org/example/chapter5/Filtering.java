@@ -71,5 +71,14 @@ public class Filtering {
                 .collect(Collectors.toList());
         System.out.println("Skiping elements:");
         dishesSkip2.forEach(System.out::println);
+
+        //Filtering the first two meat dishes
+        List<Dish> meatDishes =
+                menu.stream()
+                        .filter(dish -> dish.getType() == Type.MEAT)
+                        .limit(2)
+                .collect(Collectors.toList());
+        System.out.println("Filtering the first two meat dishes:");
+        System.out.println(meatDishes);
     }
 }
