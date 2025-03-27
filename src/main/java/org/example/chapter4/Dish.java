@@ -2,6 +2,7 @@ package org.example.chapter4;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class Dish {
 
@@ -47,6 +48,23 @@ public class Dish {
             new Dish("season fruit", true, 120, Type.OTHER),
             new Dish("pizza", true, 550, Type.OTHER),
             new Dish("prawns", false, 400, Type.FISH),
-            new Dish("salmon", false, 450, Type.FISH)
+            new Dish("salmon", false, 450, Type.FISH),
+            new Dish("rice", true, 350, Type.OTHER)
     );
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, vegetarian, calories, type);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dish dish = (Dish) o;
+        return vegetarian == dish.vegetarian &&
+                calories == dish.calories &&
+                Objects.equals(name, dish.name) &&
+                type == dish.type;
+    }
 }
